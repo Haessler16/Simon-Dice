@@ -75,6 +75,9 @@
         .hide{
             display: none;
         }
+        *{
+            font-family: Arial, Helvetica, sans-serif;
+        }
     </style>
 </head>
 <body>
@@ -85,8 +88,8 @@
         <div id="verde" class="color verde right" data-color="verde"></div>
         <button id="btnEmpesar" class="btn-start" onclick="empesarJuego()">Empesar Juego</button>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script>
-
         const celeste = document.getElementById("celeste")
         const violeta = document.getElementById("violeta")
         const naranja = document.getElementById("naranja")
@@ -96,6 +99,7 @@
 
         class Juego{
             constructor(){
+                this.inicializar = this.inicializar.bind(this)
                 this.inicializar()
                 this.generarSecuencia()
                 setTimeout(()=>{
@@ -159,28 +163,26 @@
                         this.nivel++
                         this.eliminarEventosClick()
                         if(this.nivel === (ULTIMO_NIVEL + 1)){
-                            this.ganoJuego()
+                            this.ganoElJuego()
                         }else{
                             setTimeout(this.siguienteNivel, 1500)
                         }
                     }
                }else{
-                this.perdioJuego()
+                this.perdioElJuego()
                }
             }
 
-            ganoJuego(){
-                //swal("Platzi", "Felicidades Ganastes!!", "success")
-                alert("Felicidades, Ganastes!!");
-                setTimeout(()=>this.inicializar(),800)
+            ganoElJuego(){
+                swal("Felicidas", "Ganastes el Juego!!", "success")
+                .then(this.inicializar)
             }
-            perdioJuego(){
-                //swal("Platzi", "Lo siento, Perdistes!! :(", "error")
-                alert("Lo siento, Perdistes!! :(");
-                setTimeout(()=>{
+            perdioElJuego(){
+                swal("Perdistes", "Lo siento, Vuelve a Intentarlo!! :(", "error")
+                .then(()=>{
+                    this.eliminarEventosClick()
                     this.inicializar()
-                    },800)
-                this.eliminarEventosClick()
+                })
             }
 
             iluminarSecuencia(){
